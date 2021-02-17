@@ -15,6 +15,13 @@ def status_view(request):
     #hosts = [d for d in listdir(reports_path) if isdir(join(reports_path, d))]
     hosts = []
     cpt_total = 0
+
+    try:
+        with open(join(reports_path, 'up_hosts')) as up_file:
+            up_hosts = up_file.read()
+    except:
+        up_hosts = ''
+
     for d in listdir(reports_path):
         if not isdir(join(reports_path, d)):
             continue
@@ -32,17 +39,17 @@ def status_view(request):
         except:
             last_update = '- 0'
         try:
-            with open(join(reports_path, '..', 'last_check')) as last_check_file:
+            with open(join(reports_path, 'last_check')) as last_check_file:
                 last_check = last_check_file.read()
         except:
             last_check = 'Never'
 
         try:
-            with open(join(reports_path, '..', 'count')) as count_file:
+            with open(join(reports_path, 'count')) as count_file:
                 counters = count_file.read()
         except:
-            cpt_connected = 'N/A'
-            cpt_failed = 'N/A'
+            counters = 'N/A N/A'
+
         counters = counters.split()
         if len(counters) == 2:
             cpt_connected = counters[0]
@@ -62,6 +69,10 @@ def status_view(request):
         status['ip'] = d
         status['last_update'] = last_update
         status['last_update_rc'] = last_update_rc
+        if d in up_hosts:
+            status['up'] = 'Up'
+        else:
+            status['up'] = ''
         hosts.append(status)
 
     context = {

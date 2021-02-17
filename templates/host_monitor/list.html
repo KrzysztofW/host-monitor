@@ -4,37 +4,39 @@
 {% block content %}
 <div class="panel panel-default">
   <div class="panel-heading">Last check: {{ last_check }}</div>
-<div class="panel-body">
-  <table id="hosts_id" class="display table table-striped table-bordered table-hover" style="width:100%">
-    <thead>
-      <tr>
-	<th>IP</th>
-	<th>Connected Users</th>
-	<th>Kernel</th>
-	<th>Version</th>
-	<th>Key name</th>
-	<th>Last update</th>
-	<th>Failure code</th>
-	<th>Date</th>
-	<th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for obj in hosts %}
-      <tr>
-	<td class="lgc_no-wrap">{{ obj.ip }}</td>
-	<td class="lgc_no-wrap">{{ obj.who }}</td>
-	<td class="lgc_no-wrap">{{ obj.kernel }}</td>
-	<td class="lgc_no-wrap">{{ obj.version }}</td>
-	<td class="lgc_no-wrap">{{ obj.keyname }}</td>
-	<td class="lgc_no-wrap">{{ obj.last_update }}</td>
-	<td class="lgc_no-wrap">{% if obj.last_update_rc != "0" %}{{ obj.last_update_rc }}{% endif %}</td>
-	<td class="lgc_no-wrap">{{ obj.date }}</td>
-	<td class="lgc_no-wrap">{{ obj.connect_failed }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="panel-body">
+    <table id="hosts_id" class="display table table-striped table-bordered table-hover" style="width:100%">
+      <thead>
+	<tr>
+	  <th>IP</th>
+	  <th>Status</th>
+	  <th>Connected Users</th>
+	  <th>Kernel</th>
+	  <th>Version</th>
+	  <th>Key name</th>
+	  <th>Last update</th>
+	  <th>Failure code</th>
+	  <th>Date</th>
+	  <th></th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for obj in hosts %}
+	<tr>
+	  <td class="lgc_no-wrap">{{ obj.ip }}</td>
+	  <td class="lgc_no-wrap">{{ obj.up }}</td>
+	  <td class="lgc_no-wrap">{{ obj.who }}</td>
+	  <td class="lgc_no-wrap">{{ obj.kernel }}</td>
+	  <td class="lgc_no-wrap">{{ obj.version }}</td>
+	  <td class="lgc_no-wrap">{{ obj.keyname }}</td>
+	  <td class="lgc_no-wrap">{{ obj.last_update }}</td>
+	  <td class="lgc_no-wrap">{% if obj.last_update_rc != "0" %}{{ obj.last_update_rc }}{% endif %}</td>
+	  <td class="lgc_no-wrap">{{ obj.date }}</td>
+	  <td class="lgc_no-wrap">{{ obj.connect_failed }}</td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
   <br>
   <div><p>Total hosts: {{ cpt_total }}, connected: {{ cpt_connected }}, connection failed: {{ cpt_failed }}</p></div>
 </div>

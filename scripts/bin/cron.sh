@@ -44,6 +44,7 @@ function log() {
 
 cpt_connected=0
 cpt_failed=0
+up_hosts=''
 
 # $1 - network
 function get_info() {
@@ -63,10 +64,10 @@ function get_info() {
 			echo $e > $basedir/reports/$h/connect_failed
 			cpt_failed=$((cpt_failed+1))
 			continue
-		else
-			rm -f $basedir/reports/$h/connect_failed
-			cpt_connected=$((cpt_connected+1))
 		fi
+		rm -f $basedir/reports/$h/connect_failed
+		cpt_connected=$((cpt_connected+1))
+		up_hosts="$up_hosts $h"
 		echo "$s" > $basedir/reports/$h/report.json
 
 		cd $basedir/updates/
@@ -89,5 +90,6 @@ for n in $networks; do
 	get_info $n
 done
 
-echo $cpt_connected $cpt_failed > $basedir/count
-date "+%Y-%m-%d %H:%M:%S" > $basedir/last_check
+echo $cpt_connected $cpt_failed > $basedir/reports/count
+echo $up_hosts > $basedir/reports/up_hosts
+date "+%Y-%m-%d %H:%M:%S" > $basedir/reports/last_check
