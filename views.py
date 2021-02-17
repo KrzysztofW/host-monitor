@@ -56,8 +56,8 @@ def status_view(request):
             cpt_failed = counters[1]
         else:
             cpt_connected = 0
-            cpt_failed = 0            
-            
+            cpt_failed = 0
+
         if isfile(join(reports_path, d, 'connect_failed')):
             status['connect_failed'] = 'Connection failed'
 
